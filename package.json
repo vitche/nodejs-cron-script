@@ -4,6 +4,7 @@
   "description": "Node.js library to schedule JavaScript code into the OS's CRON. Unlike other libraries not interacting with OS.",
   "main": "main.js",
   "scripts": {
+    "test-schedule": "node tests/schedule.js"
   },
   "repository": {
     "type": "git",
@@ -14,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/vitche/nodejs-cron-script/issues"
   },
-  "homepage": "https://github.com/vitche/nodejs-cron-script#readme"
+  "homepage": "https://github.com/vitche/nodejs-cron-script#readme",
+  "dependencies": {
+    "uuid": "^8.1.0"
+  }
 }
