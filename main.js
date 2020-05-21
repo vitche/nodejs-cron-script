@@ -6,10 +6,13 @@ module.exports = {
 		const code = this._compile(nativeCode);
 		exec(code, callback);
 	},
-	schedule: function(pattern, nativeCode) {
+	schedule: function(pattern, nativeCode, callback) {
 		const compiledCode = this._compile(nativeCode);
 		const path = this._export(compiledCode);
-		console.log(path);
+		const cronRecord = pattern + ' ' + path;
+		const cronCommand = 'echo "' + cronRecord + '" | crontab';
+		console.log(cronCommand);
+		exec(cronCommand, callback);
 	},
 	_compile: function(nativeCode) {
 		let code = "" + nativeCode;
@@ -28,6 +31,7 @@ module.exports = {
 		const path = process.cwd() + '/cron-' + identifier + '.sh';
 		fs.writeFileSync(path, code, { 
 			encoding: "utf8", 
+			mode: 744,
 			flag: "a+"
 		});
 		return path;
