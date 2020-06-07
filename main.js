@@ -2,8 +2,10 @@ const fs = require('fs');
 const uuid = require('uuid').v4;
 const exec = require('child_process').exec;
 module.exports = {
-    execute: function (nativeCode, callback) {
-        const code = this.compile(nativeCode);
+    execute: function (code, callback) {
+        if ('function' === typeof code) {
+            code = this.compile(code);
+        }
         exec(code, callback);
     },
     schedule: function (pattern, code, callback) {
@@ -16,8 +18,15 @@ module.exports = {
         console.log(cronCommand);
         exec(cronCommand, callback);
     },
-    compile: function (nativeCode) {
-        let code = "" + nativeCode;
+    compile: function (nativeCode, closure) {
+        let closureCode = "";
+        if (closure) {
+            for (let variable in closure) {
+                const value = closure[variable];
+                closureCode += 'const ' + variable + ' = \'' + value + '\';';
+            }
+        }
+        let code = closureCode + nativeCode;
         code = code.replace(/\r/g, '');
         code = code.replace(/\n/g, '');
         code = code.replace(/\) {	/g, '){');
