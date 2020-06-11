@@ -13,7 +13,7 @@ module.exports = {
             code = this.compile(code);
         }
         const path = this._export(code);
-        const cronRecord = pattern + ' ' + 'NODE_PATH="' + process.cwd() + '" ' + path + ' > ' + path + '.log 2>&1';
+        const cronRecord = pattern + ' ' + 'NODE_PATH="' + process.cwd() + '/node_modules" ' + path + ' > ' + path + '.log 2>&1';
         const cronCommand = '(crontab -l; echo "' + cronRecord + '") | crontab';
         console.log(cronCommand);
         exec(cronCommand, callback);
