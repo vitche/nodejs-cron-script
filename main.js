@@ -14,7 +14,7 @@ module.exports = {
         }
         const path = this._export(code);
         const cronRecord = pattern + ' ' + 'NODE_PATH="' + process.cwd() + '/node_modules" ' + path + ' > ' + path + '.log 2>&1';
-        const cronCommand = '(crontab -l; echo "' + cronRecord + '") | crontab';
+        const cronCommand = '(crontab -l; echo "' + cronRecord + '") > cron.tab; crontab cron.tab; rm cron.tab';
         console.log(cronCommand);
         exec(cronCommand, callback);
     },
