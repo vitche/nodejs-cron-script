@@ -7,6 +7,10 @@ module.exports = {
         }
         exec(code, callback);
     },
+    delete: function (identifier, callback) {
+        const fileName = this._fileName(identifier);
+        fs.unlink(fileName, callback);
+    },
     schedule: function (identifier, pattern, code, callback) {
         if ('function' === typeof code) {
             code = this.compile(code);
@@ -37,8 +41,11 @@ module.exports = {
         code = 'echo \"' + code + '\" | /usr/local/bin/node';
         return code;
     },
+    _fileName: function (identifier) {
+        return process.cwd() + '/cron-' + identifier + '.sh';
+    },
     _export: function (identifier, code) {
-        const path = process.cwd() + '/cron-' + identifier + '.sh';
+        const path = this._fileName(identifier);
         fs.writeFileSync(path, code, {
             encoding: "utf8",
             mode: 0o755,
