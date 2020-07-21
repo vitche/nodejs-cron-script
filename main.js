@@ -1,5 +1,4 @@
 const fs = require('fs');
-const uuid = require('uuid').v4;
 const exec = require('child_process').exec;
 module.exports = {
     execute: function (code, callback) {
@@ -8,11 +7,11 @@ module.exports = {
         }
         exec(code, callback);
     },
-    schedule: function (pattern, code, callback) {
+    schedule: function (identifier, pattern, code, callback) {
         if ('function' === typeof code) {
             code = this.compile(code);
         }
-        const path = this._export(code);
+        const path = this._export(identifier, code);
         const cronRecord = pattern + ' ' + 'NODE_PATH="' + process.cwd() + '/node_modules" ' + path + ' > ' + path + '.log 2>&1';
         const cronCommand = '(crontab -l; echo "' + cronRecord + '") > cron.tab; crontab cron.tab; rm cron.tab';
         console.log(cronCommand);
@@ -38,8 +37,7 @@ module.exports = {
         code = 'echo \"' + code + '\" | /usr/local/bin/node';
         return code;
     },
-    _export: function (code) {
-        const identifier = uuid();
+    _export: function (identifier, code) {
         const path = process.cwd() + '/cron-' + identifier + '.sh';
         fs.writeFileSync(path, code, {
             encoding: "utf8",

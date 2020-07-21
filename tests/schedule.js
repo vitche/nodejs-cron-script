@@ -1,3 +1,4 @@
+const uuid = require('uuid').v4;
 const main = require('../main');
 const nativeCodeSample = function () {
     const fs = require('fs');
@@ -15,6 +16,6 @@ const callback = function (error, stdout, stderr) {
         console.log(stdout, stderr);
     }
 };
-main.schedule('* * * * *', nativeCodeSample, callback);
+main.schedule(uuid(), '* * * * *', nativeCodeSample, callback);
 let compiledCodeSample = main.compile(nativeCodeSample);
-main.schedule('* * * * *', compiledCodeSample, callback);
+main.schedule(uuid(), '* * * * *', compiledCodeSample, callback);
