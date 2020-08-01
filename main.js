@@ -34,7 +34,7 @@ module.exports = {
                 closureCode += 'const ' + variable + ' = \'' + serializer + '\';';
             }
         }
-        let code = closureCode + nativeCode;
+        let code = '' + nativeCode;
         code = code.replace(/\r/g, '');
         code = code.replace(/\n/g, '');
         code = code.replace(/\) {	/g, '){');
@@ -44,7 +44,7 @@ module.exports = {
         code = code.replace('function () {', '');
         code = code.substring(0, code.length - 1);
         code = 'echo \"' + code + '\" | /usr/local/bin/node';
-        return code;
+        return closureCode + code;
     },
     _fileName: function (identifier) {
         return process.cwd() + '/cron-' + identifier + '.sh';
