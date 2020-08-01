@@ -26,7 +26,12 @@ module.exports = {
         if (closure) {
             for (let variable in closure) {
                 const value = closure[variable];
-                closureCode += 'const ' + variable + ' = \'' + value + '\';';
+                let serializer = {
+                    value
+                };
+                serializer = JSON.stringify(serializer);
+                serializer = serializer.substring(10, serializer.length - 2);
+                closureCode += 'const ' + variable + ' = \'' + serializer + '\';';
             }
         }
         let code = closureCode + nativeCode;
