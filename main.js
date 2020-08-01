@@ -43,8 +43,8 @@ module.exports = {
         code = code.replace('function(){', '');
         code = code.replace('function () {', '');
         code = code.substring(0, code.length - 1);
-        code = 'echo \"' + code + '\" | /usr/local/bin/node';
-        return closureCode + code;
+        code = 'echo \"' + closureCode + code + '\" | /usr/local/bin/node';
+        return code;
     },
     _fileName: function (identifier) {
         return process.cwd() + '/cron-' + identifier + '.sh';
