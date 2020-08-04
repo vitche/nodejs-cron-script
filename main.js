@@ -44,7 +44,7 @@ module.exports = {
         code = code.replace('function(){', '');
         code = code.replace('function () {', '');
         code = code.substring(0, code.length - 1);
-        code = 'echo \"' + closureCode + code + '\" | /usr/local/bin/node';
+        code = '#!/bin/bash\necho \"' + closureCode + code + '\" | /usr/local/bin/node';
         return code;
     },
     _fileName: function (identifier) {
