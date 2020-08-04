@@ -34,7 +34,7 @@ module.exports = {
                 closureCode += 'const ' + variable + ' = \'' + serializer + '\';';
             }
         }
-        closureCode = closureCode.replace(/\\n/g, '\\\\n');
+        closureCode = closureCode.replace(/\\\\n/g, '\\\\\\\\n');
         let code = '' + nativeCode;
         code = code.replace(/\r/g, '');
         code = code.replace(/\n/g, '');
