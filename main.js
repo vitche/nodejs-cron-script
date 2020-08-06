@@ -31,10 +31,10 @@ module.exports = {
                 };
                 serializer = JSON.stringify(serializer);
                 serializer = serializer.substring(10, serializer.length - 2);
-                closureCode += 'const ' + variable + ' = \'' + serializer + '\';';
+                closureCode += 'let ' + variable + ' = \'' + serializer + '\';';
             }
         }
-        closureCode = closureCode.replace(/\\\\n/g, '\\\\\\\\n');
+        // closureCode = closureCode.replace(/\\\\n/g, '\\\\\\\\n');
         let code = '' + nativeCode;
         code = code.replace(/\r/g, '');
         code = code.replace(/\n/g, '');
